@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+load 'trie_again.rb'
+load 'dict.rb'
+require 'benchmark'
+
+list = `cat /usr/share/dict/words`; nil
+
+Benchmark.bm do |x|
+  x.report { @d1 = Dictionary.new(list) }
+  x.report { @d2 = DictionaryAgain.new(list) }
+end
+
+Benchmark.bm do |x|
+  x.report { @d1.find "zenith" }
+  x.report { @d2.find "zenith" }
+  x.report { list =~ /\nzenith\n/ }
+end
+
